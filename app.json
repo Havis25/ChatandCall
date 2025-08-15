@@ -9,9 +9,13 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "Digunakan untuk pratinjau panggilan (mock call) dan panggilan video."
+      }
     },
     "android": {
+      "permissions": ["CAMERA"],
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -33,10 +37,13 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ]
+      ],
+      "expo-secure-store",
+      "expo-font"
     ],
-    "experiments": {
-      "typedRoutes": true
+    "experiments": { "typedRoutes": true },
+    "extra": {
+      "EXPO_PUBLIC_SOCKET_URL": "https://t22bhmg5-4000.asse.devtunnels.ms/"
     }
   }
 }
