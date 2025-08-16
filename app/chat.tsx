@@ -342,21 +342,6 @@ export default function ChatAndCallScreen() {
     <View style={{ flex: 1, backgroundColor: Colors.bg }}>
       {/* Header */}
       <View style={{ padding: 12, gap: 6, backgroundColor: "#f8fafc" }}>
-        <Text style={{ fontWeight: "bold" }}>Your ID (customer_id): {uid}</Text>
-        <Text>Server: {SOCKET_URL}</Text>
-        <Text>Socket ID: {socketId || "—"}</Text>
-        <Text>
-          Status:{" "}
-          {connected
-            ? authed
-              ? "Connected + Authed"
-              : "Connected (auth pending)"
-            : "Disconnected"}
-        </Text>
-        {connErr ? (
-          <Text style={{ color: "#b91c1c" }}>Error: {connErr}</Text>
-        ) : null}
-
         <Text style={{ marginTop: 4 }}>
           Active Room: {ACTIVE_ROOM} • Peers: {peerCount}
         </Text>

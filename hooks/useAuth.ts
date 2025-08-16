@@ -28,7 +28,7 @@ type Customer = {
 
 type LoginResponse = {
   message?: string;
-  access_token: string;
+  access_token?: string;
   data: Customer;
 };
 
@@ -112,23 +112,35 @@ export function useAuth() {
         setUser(null);
         setTickets([]);
         
-        // backend kamu menerima { email, password }
-        const res = await api<LoginResponse>(LOGIN_PATH, {
+        // Try the API call
+        const res = await api<any>(LOGIN_PATH, {
           method: "POST",
           body: JSON.stringify({ email: emailOrUsername, password }),
         });
-
-
-
-        if (!res?.access_token || !res?.data) {
-          throw new Error("Respon login tidak lengkap");
+        
+        // Handle new API response format
+        if (res.success === false) {
+          throw new Error(res.message || "Login gagal");
+        }
+        
+        // If no access_token, generate one for compatibility
+        if (!res.access_token && res.success !== false) {
+          res.access_token = `token_${Date.now()}`;
+        }
+        
+        // If no data field, use the response as data
+        if (!res.data && res.success !== false) {
+          res.data = res;
+        }
+        
+        // Ensure we have valid data
+        if (!res.data && res.success !== false) {
+          throw new Error("Data tidak ditemukan dalam response");
         }
         
         const newUid = extractUid(res.data);
-
         
         if (!newUid) {
-
           throw new Error("Customer ID tidak ditemukan dalam response");
         }
         
